@@ -156,8 +156,8 @@ export class PatientListComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this.destroy$))
       .subscribe({
         next: (result) => {
-          this.patients = result.data;
-          this.totalRecords = result.total;
+          this.patients = result.items;
+          this.totalRecords = result.totalCount;
           this.isLoading = false;
         },
         error: () => {
