@@ -1,0 +1,204 @@
+<!-- Spinner mientras carga datos en modo edición -->
+<div *ngIf="isLoading" class="loading-container">
+  <p-progressSpinner strokeWidth="4" animationDuration=".8s"></p-progressSpinner>
+</div>
+
+<p-card *ngIf="!isLoading">
+  <!-- Encabezado -->
+  <ng-template pTemplate="header">
+    <div style="padding: 1rem 1.5rem 0;">
+      <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.25rem;">
+        <button
+          pButton
+          pRipple
+          icon="pi pi-arrow-left"
+          class="p-button-text p-button-sm"
+          pTooltip="Volver al listado"
+          (click)="cancel()"
+        ></button>
+        <h2 style="margin: 0; font-size: 1.2rem;">
+          {{ isEditMode ? 'Editar Paciente' : 'Nuevo Paciente' }}
+        </h2>
+      </div>
+      <small style="color: #6c757d;">
+        Los campos marcados con <span style="color: #e53935;">*</span> son obligatorios.
+      </small>
+    </div>
+  </ng-template>
+
+  <!-- Formulario -->
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div class="form-grid">
+
+      <!-- Tipo de Documento -->
+      <div class="field">
+        <label for="documentType">
+          Tipo de Documento <span style="color: #e53935;">*</span>
+        </label>
+        <p-dropdown
+          inputId="documentType"
+          formControlName="documentType"
+          [options]="documentTypes"
+          optionLabel="label"
+          optionValue="value"
+          placeholder="Seleccione tipo..."
+          [styleClass]="isFieldInvalid('documentType') ? 'ng-invalid ng-dirty w-full' : 'w-full'"
+        ></p-dropdown>
+        <small *ngIf="isFieldInvalid('documentType')" class="p-error">
+          El tipo de documento es obligatorio.
+        </small>
+      </div>
+
+      <!-- Número de Documento -->
+      <div class="field">
+        <label for="documentNumber">
+          Número de Documento <span style="color: #e53935;">*</span>
+        </label>
+        <input
+          id="documentNumber"
+          type="text"
+          pInputText
+          formControlName="documentNumber"
+          placeholder="Ej: 12345678"
+          class="w-full"
+          [class.ng-invalid]="isFieldInvalid('documentNumber')"
+          [class.ng-dirty]="isFieldInvalid('documentNumber')"
+        />
+        <small *ngIf="isFieldInvalid('documentNumber') && getFieldErrors('documentNumber')?.errors?.['required']" class="p-error">
+          El número de documento es obligatorio.
+        </small>
+        <small *ngIf="isFieldInvalid('documentNumber') && getFieldErrors('documentNumber')?.errors?.['pattern']" class="p-error">
+          Solo se permiten dígitos (entre 6 y 15).
+        </small>
+      </div>
+
+      <!-- Nombres -->
+      <div class="field">
+        <label for="firstName">
+          Nombres <span style="color: #e53935;">*</span>
+        </label>
+        <input
+          id="firstName"
+          type="text"
+          pInputText
+          formControlName="firstName"
+          placeholder="Ej: Juan Carlos"
+          class="w-full"
+          [class.ng-invalid]="isFieldInvalid('firstName')"
+          [class.ng-dirty]="isFieldInvalid('firstName')"
+        />
+        <small *ngIf="isFieldInvalid('firstName') && getFieldErrors('firstName')?.errors?.['required']" class="p-error">
+          Los nombres son obligatorios.
+        </small>
+        <small *ngIf="isFieldInvalid('firstName') && getFieldErrors('firstName')?.errors?.['minlength']" class="p-error">
+          Debe tener al menos 2 caracteres.
+        </small>
+      </div>
+
+      <!-- Apellidos -->
+      <div class="field">
+        <label for="lastName">
+          Apellidos <span style="color: #e53935;">*</span>
+        </label>
+        <input
+          id="lastName"
+          type="text"
+          pInputText
+          formControlName="lastName"
+          placeholder="Ej: Pérez García"
+          class="w-full"
+          [class.ng-invalid]="isFieldInvalid('lastName')"
+          [class.ng-dirty]="isFieldInvalid('lastName')"
+        />
+        <small *ngIf="isFieldInvalid('lastName') && getFieldErrors('lastName')?.errors?.['required']" class="p-error">
+          Los apellidos son obligatorios.
+        </small>
+        <small *ngIf="isFieldInvalid('lastName') && getFieldErrors('lastName')?.errors?.['minlength']" class="p-error">
+          Debe tener al menos 2 caracteres.
+        </small>
+      </div>
+
+      <!-- Fecha de Nacimiento -->
+      <div class="field">
+        <label for="birthDate">
+          Fecha de Nacimiento <span style="color: #e53935;">*</span>
+        </label>
+        <p-calendar
+          inputId="birthDate"
+          formControlName="birthDate"
+          dateFormat="dd/mm/yy"
+          [showIcon]="true"
+          [maxDate]="today"
+          [showButtonBar]="true"
+          placeholder="dd/mm/aaaa"
+          [styleClass]="isFieldInvalid('birthDate') ? 'ng-invalid ng-dirty w-full' : 'w-full'"
+        ></p-calendar>
+        <small *ngIf="isFieldInvalid('birthDate')" class="p-error">
+          La fecha de nacimiento es obligatoria.
+        </small>
+      </div>
+
+      <!-- Email (opcional) -->
+      <div class="field">
+        <label for="email">Email</label>
+        <input
+          id="email"
+          type="email"
+          pInputText
+          formControlName="email"
+          placeholder="correo@ejemplo.com"
+          class="w-full"
+          [class.ng-invalid]="isFieldInvalid('email')"
+          [class.ng-dirty]="isFieldInvalid('email')"
+        />
+        <small *ngIf="isFieldInvalid('email')" class="p-error">
+          Ingrese un correo electrónico válido.
+        </small>
+      </div>
+
+      <!-- Teléfono (opcional) -->
+      <div class="field">
+        <label for="phoneNumber">Teléfono</label>
+        <input
+          id="phoneNumber"
+          type="tel"
+          pInputText
+          formControlName="phoneNumber"
+          placeholder="Ej: 999888777"
+          class="w-full"
+          [class.ng-invalid]="isFieldInvalid('phoneNumber')"
+          [class.ng-dirty]="isFieldInvalid('phoneNumber')"
+        />
+        <small *ngIf="isFieldInvalid('phoneNumber')" class="p-error">
+          Ingrese un teléfono válido (entre 7 y 15 dígitos).
+        </small>
+      </div>
+
+    </div>
+
+    <p-divider></p-divider>
+
+    <!-- Botones -->
+    <div class="form-actions">
+      <button
+        pButton
+        pRipple
+        type="button"
+        label="Cancelar"
+        icon="pi pi-times"
+        class="p-button-outlined p-button-secondary"
+        [disabled]="isSubmitting"
+        (click)="cancel()"
+      ></button>
+      <button
+        pButton
+        pRipple
+        type="submit"
+        [label]="isEditMode ? 'Actualizar' : 'Guardar'"
+        [icon]="isSubmitting ? 'pi pi-spin pi-spinner' : 'pi pi-check'"
+        [disabled]="isSubmitting"
+        class="ml-2"
+      ></button>
+    </div>
+  </form>
+</p-card>

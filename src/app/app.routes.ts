@@ -1,3 +1,3 @@
-import { Routes } from '@angular/router';
-
-export const routes: Routes = [];
+// Este archivo es reemplazado por app-routing.module.ts en la arquitectura NgModule (Angular 16).
+// Se mantiene vacío para compatibilidad de ficheros.
+export {};

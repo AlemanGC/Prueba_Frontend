@@ -1,0 +1,196 @@
+{
+  "patients": [
+    {
+      "id": "1",
+      "documentType": "DNI",
+      "documentNumber": "12345678",
+      "firstName": "Juan Carlos",
+      "lastName": "Pérez García",
+      "birthDate": "1985-03-15",
+      "email": "juan.perez@email.com",
+      "phone": "999111222",
+      "createdAt": "2024-01-10T08:30:00.000Z"
+    },
+    {
+      "id": "2",
+      "documentType": "DNI",
+      "documentNumber": "87654321",
+      "firstName": "María Elena",
+      "lastName": "González López",
+      "birthDate": "1992-07-22",
+      "email": "maria.gonzalez@email.com",
+      "phone": "988333444",
+      "createdAt": "2024-01-15T10:00:00.000Z"
+    },
+    {
+      "id": "3",
+      "documentType": "CE",
+      "documentNumber": "C001234567",
+      "firstName": "Carlos Alberto",
+      "lastName": "Rodríguez Martínez",
+      "birthDate": "1978-11-30",
+      "email": "carlos.rodriguez@email.com",
+      "phone": "977555666",
+      "createdAt": "2024-02-01T09:15:00.000Z"
+    },
+    {
+      "id": "4",
+      "documentType": "DNI",
+      "documentNumber": "11223344",
+      "firstName": "Ana Sofía",
+      "lastName": "Flores Mendoza",
+      "birthDate": "2000-05-18",
+      "email": "ana.flores@email.com",
+      "phone": "966777888",
+      "createdAt": "2024-02-10T14:45:00.000Z"
+    },
+    {
+      "id": "5",
+      "documentType": "PASSPORT",
+      "documentNumber": "P9876543",
+      "firstName": "Robert",
+      "lastName": "Smith Johnson",
+      "birthDate": "1975-09-03",
+      "email": "robert.smith@email.com",
+      "phone": "955888999",
+      "createdAt": "2024-02-20T11:30:00.000Z"
+    },
+    {
+      "id": "6",
+      "documentType": "DNI",
+      "documentNumber": "33445566",
+      "firstName": "Lucía",
+      "lastName": "Torres Vargas",
+      "birthDate": "1998-12-10",
+      "email": "lucia.torres@email.com",
+      "phone": "944111222",
+      "createdAt": "2024-03-05T08:00:00.000Z"
+    },
+    {
+      "id": "7",
+      "documentType": "DNI",
+      "documentNumber": "55667788",
+      "firstName": "Diego",
+      "lastName": "Castro Ríos",
+      "birthDate": "1990-04-25",
+      "email": "diego.castro@email.com",
+      "phone": "933222333",
+      "createdAt": "2024-03-12T15:20:00.000Z"
+    },
+    {
+      "id": "8",
+      "documentType": "CE",
+      "documentNumber": "C009876543",
+      "firstName": "Valentina",
+      "lastName": "Morales Jiménez",
+      "birthDate": "1987-08-14",
+      "email": "valentina.morales@email.com",
+      "phone": "922333444",
+      "createdAt": "2024-03-20T09:45:00.000Z"
+    },
+    {
+      "id": "9",
+      "documentType": "DNI",
+      "documentNumber": "77889900",
+      "firstName": "Sebastián",
+      "lastName": "Vega Paredes",
+      "birthDate": "2002-01-07",
+      "email": "sebastian.vega@email.com",
+      "phone": "911444555",
+      "createdAt": "2024-04-01T10:00:00.000Z"
+    },
+    {
+      "id": "10",
+      "documentType": "DNI",
+      "documentNumber": "99001122",
+      "firstName": "Isabella",
+      "lastName": "Núñez Soto",
+      "birthDate": "1995-06-29",
+      "email": "isabella.nunez@email.com",
+      "phone": "900555666",
+      "createdAt": "2024-04-15T13:30:00.000Z"
+    }
+  ],
+  "appointments": [
+    {
+      "id": "1",
+      "patientId": "1",
+      "date": "2024-06-10T10:00:00.000Z",
+      "reason": "Consulta general / chequeo anual",
+      "status": "COMPLETED",
+      "notes": "Paciente en buen estado. Presión normal."
+    },
+    {
+      "id": "2",
+      "patientId": "1",
+      "date": "2024-07-20T11:00:00.000Z",
+      "reason": "Control de resultados",
+      "status": "COMPLETED",
+      "notes": "Resultados dentro de los rangos normales."
+    },
+    {
+      "id": "3",
+      "patientId": "1",
+      "date": "2025-01-15T09:30:00.000Z",
+      "reason": "Seguimiento anual",
+      "status": "SCHEDULED",
+      "notes": ""
+    },
+    {
+      "id": "4",
+      "patientId": "2",
+      "date": "2024-05-05T14:00:00.000Z",
+      "reason": "Dolor de cabeza persistente",
+      "status": "COMPLETED",
+      "notes": "Se recetó ibuprofeno 400mg por 5 días."
+    },
+    {
+      "id": "5",
+      "patientId": "2",
+      "date": "2024-08-12T10:00:00.000Z",
+      "reason": "Revisión neurológica",
+      "status": "CANCELLED",
+      "notes": "Paciente no se presentó."
+    },
+    {
+      "id": "6",
+      "patientId": "3",
+      "date": "2024-09-03T08:30:00.000Z",
+      "reason": "Consulta cardiológica",
+      "status": "COMPLETED",
+      "notes": "ECG normal. Se recomienda ejercicio moderado."
+    },
+    {
+      "id": "7",
+      "patientId": "4",
+      "date": "2024-10-18T15:00:00.000Z",
+      "reason": "Vacunación",
+      "status": "COMPLETED",
+      "notes": "Vacuna contra influenza aplicada."
+    },
+    {
+      "id": "8",
+      "patientId": "5",
+      "date": "2025-02-10T11:30:00.000Z",
+      "reason": "Examen de rutina",
+      "status": "SCHEDULED",
+      "notes": ""
+    },
+    {
+      "id": "9",
+      "patientId": "6",
+      "date": "2024-11-22T09:00:00.000Z",
+      "reason": "Revisión postoperatoria",
+      "status": "COMPLETED",
+      "notes": "Cicatrización correcta."
+    },
+    {
+      "id": "10",
+      "patientId": "7",
+      "date": "2025-03-05T10:00:00.000Z",
+      "reason": "Control de glucosa",
+      "status": "SCHEDULED",
+      "notes": ""
+    }
+  ]
+}

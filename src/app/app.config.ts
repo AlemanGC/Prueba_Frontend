@@ -1,11 +1,3 @@
-import { ApplicationConfig, provideBrowserGlobalErrorListeners } from '@angular/core';
-import { provideRouter } from '@angular/router';
-
-import { routes } from './app.routes';
-
-export const appConfig: ApplicationConfig = {
-  providers: [
-    provideBrowserGlobalErrorListeners(),
-    provideRouter(routes)
-  ]
-};
+// Este archivo es reemplazado por app.module.ts en la arquitectura NgModule (Angular 16).
+// Se mantiene vacío para compatibilidad de ficheros.
+export {};

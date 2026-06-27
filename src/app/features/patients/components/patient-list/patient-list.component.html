@@ -1,0 +1,198 @@
+<!-- Barra de herramientas principal -->
+<p-toolbar>
+  <ng-template pTemplate="start">
+    <h2 style="margin: 0; font-size: 1.25rem; color: #343a40;">
+      <i class="pi pi-users" style="margin-right: 0.5rem; color: #1976d2;"></i>
+      Pacientes
+    </h2>
+  </ng-template>
+  <ng-template pTemplate="end">
+    <button
+      pButton
+      pRipple
+      label="Nuevo Paciente"
+      icon="pi pi-plus"
+      class="p-button-success"
+      (click)="navigateToCreate()"
+    ></button>
+    <button
+      pButton
+      pRipple
+      label="Exportar CSV"
+      icon="pi pi-download"
+      class="p-button-help ml-2"
+      (click)="showExportDialog = true"
+    ></button>
+  </ng-template>
+</p-toolbar>
+
+<!-- Panel de filtros -->
+<p-card styleClass="mt-3">
+  <div class="filter-container">
+    <div class="filter-field">
+      <label>Buscar por nombre</label>
+      <input
+        pInputText
+        type="text"
+        placeholder="Ej: Juan..."
+        [formControl]="nameFilter"
+        class="w-full"
+      />
+    </div>
+    <div class="filter-field">
+      <label>N° de Documento (exacto)</label>
+      <input
+        pInputText
+        type="text"
+        placeholder="Ej: 12345678"
+        [formControl]="documentFilter"
+        class="w-full"
+      />
+    </div>
+    <button
+      pButton
+      pRipple
+      label="Limpiar filtros"
+      icon="pi pi-times"
+      class="p-button-outlined p-button-secondary"
+      (click)="clearFilters()"
+    ></button>
+  </div>
+</p-card>
+
+<!-- Tabla de pacientes -->
+<p-table
+  #dt
+  [value]="patients"
+  [paginator]="true"
+  [rows]="rows"
+  [rowsPerPageOptions]="[5, 10, 25, 50]"
+  [showCurrentPageReport]="true"
+  currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} pacientes"
+  [totalRecords]="totalRecords"
+  [lazy]="true"
+  (onLazyLoad)="onLazyLoad($event)"
+  [loading]="isLoading"
+  dataKey="patientId"
+  styleClass="p-datatable-striped p-datatable-gridlines mt-3"
+  [tableStyle]="{ 'min-width': '70rem' }"
+>
+  <ng-template pTemplate="header">
+    <tr>
+      <th pSortableColumn="documentNumber" style="width: 180px">
+        Documento <p-sortIcon field="documentNumber"></p-sortIcon>
+      </th>
+      <th pSortableColumn="firstName">
+        Nombres <p-sortIcon field="firstName"></p-sortIcon>
+      </th>
+      <th pSortableColumn="lastName">
+        Apellidos <p-sortIcon field="lastName"></p-sortIcon>
+      </th>
+      <th>Email</th>
+      <th>Teléfono</th>
+      <th pSortableColumn="createdAt" style="width: 150px">
+        F. Creación <p-sortIcon field="createdAt"></p-sortIcon>
+      </th>
+      <th style="width: 130px; text-align: center">Acciones</th>
+    </tr>
+  </ng-template>
+
+  <ng-template pTemplate="body" let-patient>
+    <tr>
+      <td>
+        <p-tag
+          [value]="patient.documentType"
+          severity="info"
+          styleClass="mr-1"
+        ></p-tag>
+        {{ patient.documentNumber }}
+      </td>
+      <td>{{ patient.firstName }}</td>
+      <td>{{ patient.lastName }}</td>
+      <td>{{ patient.email || '—' }}</td>
+      <td>{{ patient.phone || '—' }}</td>
+      <td>{{ patient.createdAt | date : 'dd/MM/yyyy' }}</td>
+      <td style="text-align: center">
+        <button
+          pButton
+          pRipple
+          icon="pi pi-eye"
+          class="p-button-rounded p-button-info p-button-text"
+          pTooltip="Ver detalle"
+          tooltipPosition="top"
+          (click)="viewPatient(patient)"
+        ></button>
+        <button
+          pButton
+          pRipple
+          icon="pi pi-pencil"
+          class="p-button-rounded p-button-warning p-button-text"
+          pTooltip="Editar"
+          tooltipPosition="top"
+          (click)="editPatient(patient)"
+        ></button>
+        <button
+          pButton
+          pRipple
+          icon="pi pi-trash"
+          class="p-button-rounded p-button-danger p-button-text"
+          pTooltip="Eliminar"
+          tooltipPosition="top"
+          (click)="confirmDelete(patient)"
+        ></button>
+      </td>
+    </tr>
+  </ng-template>
+
+  <ng-template pTemplate="emptymessage">
+    <tr>
+      <td colspan="7" style="text-align: center; padding: 2rem; color: #6c757d;">
+        <i class="pi pi-inbox" style="font-size: 2rem; display: block; margin-bottom: 0.5rem;"></i>
+        No se encontraron pacientes con los filtros aplicados.
+      </td>
+    </tr>
+  </ng-template>
+</p-table>
+
+<!-- Diálogo: Exportar CSV -->
+<p-dialog
+  header="Exportar Pacientes a CSV"
+  [(visible)]="showExportDialog"
+  [modal]="true"
+  [style]="{ width: '420px' }"
+  [draggable]="false"
+>
+  <div class="export-dialog">
+    <label>Pacientes creados a partir de (opcional):</label>
+    <p-calendar
+      [(ngModel)]="exportFromDate"
+      dateFormat="dd/mm/yy"
+      [showIcon]="true"
+      [showButtonBar]="true"
+      appendTo="body"
+      placeholder="Seleccione una fecha..."
+      class="w-full mt-2"
+    ></p-calendar>
+    <small style="color: #6c757d;">
+      Si no selecciona fecha, se exportan todos los pacientes del listado actual.
+    </small>
+  </div>
+
+  <ng-template pTemplate="footer">
+    <button
+      pButton
+      pRipple
+      label="Cancelar"
+      icon="pi pi-times"
+      class="p-button-text p-button-secondary"
+      (click)="showExportDialog = false"
+    ></button>
+    <button
+      pButton
+      pRipple
+      label="Exportar CSV"
+      icon="pi pi-download"
+      (click)="exportCsv()"
+    ></button>
+  </ng-template>
+</p-dialog>

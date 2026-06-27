@@ -1,0 +1,137 @@
+<!-- Loading -->
+<div *ngIf="isLoading" class="loading-container">
+  <p-progressSpinner strokeWidth="4" animationDuration=".8s"></p-progressSpinner>
+</div>
+
+<ng-container *ngIf="!isLoading && patient">
+
+  <!-- Encabezado de página -->
+  <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1rem;">
+    <button
+      pButton
+      pRipple
+      icon="pi pi-arrow-left"
+      class="p-button-text"
+      pTooltip="Volver al listado"
+      (click)="goBack()"
+    ></button>
+    <h2 style="margin: 0; font-size: 1.2rem;">
+      Detalle del Paciente
+    </h2>
+  </div>
+
+  <!-- Card: Datos personales -->
+  <p-card>
+    <ng-template pTemplate="header">
+      <div style="padding: 1rem 1.5rem 0; display: flex; justify-content: space-between; align-items: flex-start;">
+        <div>
+          <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.2rem;">
+            <i class="pi pi-user" style="font-size: 1.5rem; color: #1976d2;"></i>
+            <h3 style="margin: 0; font-size: 1.3rem;">
+              {{ patient.firstName }} {{ patient.lastName }}
+            </h3>
+          </div>
+          <p-tag
+            [value]="patient.documentType"
+            severity="info"
+            styleClass="mr-1"
+          ></p-tag>
+          <span style="color: #495057;">{{ patient.documentNumber }}</span>
+        </div>
+        <button
+          pButton
+          pRipple
+          label="Editar"
+          icon="pi pi-pencil"
+          class="p-button-warning p-button-outlined"
+          (click)="editPatient()"
+        ></button>
+      </div>
+    </ng-template>
+
+    <p-divider></p-divider>
+
+    <div class="detail-grid">
+      <div class="detail-item">
+        <span class="detail-item__label">Nombres</span>
+        <span class="detail-item__value">{{ patient.firstName }}</span>
+      </div>
+      <div class="detail-item">
+        <span class="detail-item__label">Apellidos</span>
+        <span class="detail-item__value">{{ patient.lastName }}</span>
+      </div>
+      <div class="detail-item">
+        <span class="detail-item__label">Fecha de Nacimiento</span>
+        <span class="detail-item__value">{{ patient.birthDate | date : 'dd/MM/yyyy' }}</span>
+      </div>
+      <div class="detail-item">
+        <span class="detail-item__label">Email</span>
+        <span class="detail-item__value">{{ patient.email || '—' }}</span>
+      </div>
+      <div class="detail-item">
+        <span class="detail-item__label">Teléfono</span>
+        <span class="detail-item__value">{{ patient.phoneNumber || '—' }}</span>
+      </div>
+      <div class="detail-item">
+        <span class="detail-item__label">Fecha de Registro</span>
+        <span class="detail-item__value">
+          {{ patient.createdAt | date : 'dd/MM/yyyy HH:mm' }}
+        </span>
+      </div>
+    </div>
+  </p-card>
+
+  <!-- Card: Citas médicas -->
+  <p-card styleClass="mt-3">
+    <ng-template pTemplate="header">
+      <div style="padding: 1rem 1.5rem 0;">
+        <h3 style="margin: 0; font-size: 1.1rem;">
+          <i class="pi pi-calendar" style="color: #1976d2; margin-right: 0.4rem;"></i>
+          Historial de Citas
+          <p-badge
+            [value]="appointments.length.toString()"
+            styleClass="ml-2"
+          ></p-badge>
+        </h3>
+      </div>
+    </ng-template>
+
+    <p-table
+      [value]="appointments"
+      styleClass="p-datatable-striped p-datatable-gridlines"
+    >
+      <ng-template pTemplate="header">
+        <tr>
+          <th>Fecha</th>
+          <th>Motivo</th>
+          <th style="width: 140px;">Estado</th>
+          <th>Notas</th>
+        </tr>
+      </ng-template>
+
+      <ng-template pTemplate="body" let-appt>
+        <tr>
+          <td>{{ appt.date | date : 'dd/MM/yyyy' }}</td>
+          <td>{{ appt.reason }}</td>
+          <td>
+            <p-tag
+              [value]="getStatusLabel(appt.status)"
+              [severity]="getStatusSeverity(appt.status)"
+            ></p-tag>
+          </td>
+          <td>{{ appt.notes || '—' }}</td>
+        </tr>
+      </ng-template>
+
+      <ng-template pTemplate="emptymessage">
+        <tr>
+          <td colspan="4" style="text-align: center; padding: 1.5rem; color: #6c757d;">
+            <i class="pi pi-calendar-times" style="font-size: 1.5rem; display: block; margin-bottom: 0.4rem;"></i>
+            Este paciente no tiene citas registradas.
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </p-card>
+
+</ng-container>

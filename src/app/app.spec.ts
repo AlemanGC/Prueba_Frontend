@@ -1,23 +1,31 @@
 import { TestBed } from '@angular/core/testing';
-import { App } from './app';
+import { RouterTestingModule } from '@angular/router/testing';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MessageService, ConfirmationService } from 'primeng/api';
+import { ToastModule } from 'primeng/toast';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
 
-describe('App', () => {
+import { AppComponent } from './app';
+
+describe('AppComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [App],
+      declarations: [AppComponent],
+      imports: [
+        RouterTestingModule,
+        HttpClientTestingModule,
+        BrowserAnimationsModule,
+        ToastModule,
+        ConfirmDialogModule,
+      ],
+      providers: [MessageService, ConfirmationService],
     }).compileComponents();
   });
 
   it('should create the app', () => {
-    const fixture = TestBed.createComponent(App);
+    const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
     expect(app).toBeTruthy();
-  });
-
-  it('should render title', async () => {
-    const fixture = TestBed.createComponent(App);
-    await fixture.whenStable();
-    const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('h1')?.textContent).toContain('Hello, prueba-tecnia');
   });
 });
