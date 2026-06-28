@@ -12,8 +12,11 @@ export interface PatientFilters {
 }
 
 export interface PagedResult<T> {
-  data: T[];
-  total: number;
+  items: T[];
+  totalCount: number;
+  page: number;
+  pageSize: number;
+  totalPages: number;
 }
 
 @Injectable({ providedIn: 'root' })
