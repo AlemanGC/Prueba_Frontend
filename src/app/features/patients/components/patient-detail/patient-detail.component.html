@@ -31,12 +31,6 @@
               {{ patient.firstName }} {{ patient.lastName }}
             </h3>
           </div>
-          <p-tag
-            [value]="patient.documentType"
-            severity="info"
-            styleClass="mr-1"
-          ></p-tag>
-          <span style="color: #495057;">{{ patient.documentNumber }}</span>
         </div>
         <button
           pButton
@@ -61,8 +55,8 @@
         <span class="detail-item__value">{{ patient.lastName }}</span>
       </div>
       <div class="detail-item">
-        <span class="detail-item__label">Fecha de Nacimiento</span>
-        <span class="detail-item__value">{{ patient.birthDate | date : 'dd/MM/yyyy' }}</span>
+        <span class="detail-item__label">Fecha de Contratación</span>
+        <span class="detail-item__value">{{ patient.hireDate | date : 'dd/MM/yyyy' }}</span>
       </div>
       <div class="detail-item">
         <span class="detail-item__label">Email</span>
@@ -71,12 +65,6 @@
       <div class="detail-item">
         <span class="detail-item__label">Teléfono</span>
         <span class="detail-item__value">{{ patient.phoneNumber || '—' }}</span>
-      </div>
-      <div class="detail-item">
-        <span class="detail-item__label">Fecha de Registro</span>
-        <span class="detail-item__value">
-          {{ patient.createdAt | date : 'dd/MM/yyyy HH:mm' }}
-        </span>
       </div>
     </div>
   </p-card>

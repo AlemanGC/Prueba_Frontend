@@ -39,16 +39,6 @@
         class="w-full"
       />
     </div>
-    <div class="filter-field">
-      <label>N° de Documento (exacto)</label>
-      <input
-        pInputText
-        type="text"
-        placeholder="Ej: 12345678"
-        [formControl]="documentFilter"
-        class="w-full"
-      />
-    </div>
     <button
       pButton
       pRipple
@@ -69,19 +59,13 @@
   [rowsPerPageOptions]="[5, 10, 25, 50]"
   [showCurrentPageReport]="true"
   currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} pacientes"
-  [totalRecords]="totalRecords"
-  [lazy]="true"
-  (onLazyLoad)="onLazyLoad($event)"
   [loading]="isLoading"
-  dataKey="patientId"
+  dataKey="employeeId"
   styleClass="p-datatable-striped p-datatable-gridlines mt-3"
   [tableStyle]="{ 'min-width': '70rem' }"
 >
   <ng-template pTemplate="header">
     <tr>
-      <th pSortableColumn="documentNumber" style="width: 180px">
-        Documento <p-sortIcon field="documentNumber"></p-sortIcon>
-      </th>
       <th pSortableColumn="firstName">
         Nombres <p-sortIcon field="firstName"></p-sortIcon>
       </th>
@@ -90,8 +74,8 @@
       </th>
       <th>Email</th>
       <th>Teléfono</th>
-      <th pSortableColumn="createdAt" style="width: 150px">
-        F. Creación <p-sortIcon field="createdAt"></p-sortIcon>
+      <th pSortableColumn="hireDate" style="width: 150px">
+        F. Contratación <p-sortIcon field="hireDate"></p-sortIcon>
       </th>
       <th style="width: 130px; text-align: center">Acciones</th>
     </tr>
@@ -99,19 +83,11 @@
 
   <ng-template pTemplate="body" let-patient>
     <tr>
-      <td>
-        <p-tag
-          [value]="patient.documentType"
-          severity="info"
-          styleClass="mr-1"
-        ></p-tag>
-        {{ patient.documentNumber }}
-      </td>
       <td>{{ patient.firstName }}</td>
       <td>{{ patient.lastName }}</td>
       <td>{{ patient.email || '—' }}</td>
-      <td>{{ patient.phone || '—' }}</td>
-      <td>{{ patient.createdAt | date : 'dd/MM/yyyy' }}</td>
+      <td>{{ patient.phoneNumber || '—' }}</td>
+      <td>{{ patient.hireDate | date : 'dd/MM/yyyy' }}</td>
       <td style="text-align: center">
         <button
           pButton
@@ -146,7 +122,7 @@
 
   <ng-template pTemplate="emptymessage">
     <tr>
-      <td colspan="7" style="text-align: center; padding: 2rem; color: #6c757d;">
+      <td colspan="6" style="text-align: center; padding: 2rem; color: #6c757d;">
         <i class="pi pi-inbox" style="font-size: 2rem; display: block; margin-bottom: 0.5rem;"></i>
         No se encontraron pacientes con los filtros aplicados.
       </td>
@@ -163,7 +139,7 @@
   [draggable]="false"
 >
   <div class="export-dialog">
-    <label>Pacientes creados a partir de (opcional):</label>
+    <label>Pacientes contratados a partir de (opcional):</label>
     <p-calendar
       [(ngModel)]="exportFromDate"
       dateFormat="dd/mm/yy"

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 
-import { DOCUMENT_TYPES, Patient } from '../../../../core/models/patient.model';
+import { Patient } from '../../../../core/models/patient.model';
 import { NotificationService } from '../../../../core/services/notification.service';
 import { PatientService } from '../../services/patient.service';
 
@@ -18,8 +18,6 @@ export class PatientFormComponent implements OnInit {
   isSubmitting = false;
   patientId: string | null = null;
   today = new Date();
-
-  readonly documentTypes = DOCUMENT_TYPES;
 
   constructor(
     private fb: FormBuilder,
@@ -88,14 +86,9 @@ export class PatientFormComponent implements OnInit {
 
   private buildForm(): void {
     this.form = this.fb.group({
-      documentType: [null, Validators.required],
-      documentNumber: [
-        '',
-        [Validators.required, Validators.pattern(/^\d{6,15}$/)],
-      ],
       firstName: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(100)]],
       lastName: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(100)]],
-      birthDate: [null, Validators.required],
+      hireDate: [null, Validators.required],
       email: ['', [Validators.email, Validators.maxLength(150)]],
       phoneNumber: ['', [Validators.pattern(/^\d{7,15}$/)]],
     });
@@ -108,7 +101,7 @@ export class PatientFormComponent implements OnInit {
         this.form.patchValue({
           ...patient,
           // El Calendar de PrimeNG necesita un objeto Date, no un string
-          birthDate: patient.birthDate ? new Date(patient.birthDate) : null,
+          hireDate: patient.hireDate ? new Date(patient.hireDate) : null,
         });
         this.isLoading = false;
       },
@@ -123,15 +116,13 @@ export class PatientFormComponent implements OnInit {
   private buildPayload(): Patient {
     const raw = this.form.value;
     return {
-      documentType: raw.documentType,
-      documentNumber: raw.documentNumber,
       firstName: raw.firstName,
       lastName: raw.lastName,
       // Convertir Date a formato ISO (solo fecha)
-      birthDate:
-        raw.birthDate instanceof Date
-          ? raw.birthDate.toISOString().split('T')[0]
-          : raw.birthDate,
+      hireDate:
+        raw.hireDate instanceof Date
+          ? raw.hireDate.toISOString().split('T')[0]
+          : raw.hireDate,
       email: raw.email || undefined,
       phoneNumber: raw.phoneNumber || undefined,
     };

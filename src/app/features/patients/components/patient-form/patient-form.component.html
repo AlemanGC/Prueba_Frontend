@@ -30,48 +30,6 @@
   <form [formGroup]="form" (ngSubmit)="onSubmit()">
     <div class="form-grid">
 
-      <!-- Tipo de Documento -->
-      <div class="field">
-        <label for="documentType">
-          Tipo de Documento <span style="color: #e53935;">*</span>
-        </label>
-        <p-dropdown
-          inputId="documentType"
-          formControlName="documentType"
-          [options]="documentTypes"
-          optionLabel="label"
-          optionValue="value"
-          placeholder="Seleccione tipo..."
-          [styleClass]="isFieldInvalid('documentType') ? 'ng-invalid ng-dirty w-full' : 'w-full'"
-        ></p-dropdown>
-        <small *ngIf="isFieldInvalid('documentType')" class="p-error">
-          El tipo de documento es obligatorio.
-        </small>
-      </div>
-
-      <!-- Número de Documento -->
-      <div class="field">
-        <label for="documentNumber">
-          Número de Documento <span style="color: #e53935;">*</span>
-        </label>
-        <input
-          id="documentNumber"
-          type="text"
-          pInputText
-          formControlName="documentNumber"
-          placeholder="Ej: 12345678"
-          class="w-full"
-          [class.ng-invalid]="isFieldInvalid('documentNumber')"
-          [class.ng-dirty]="isFieldInvalid('documentNumber')"
-        />
-        <small *ngIf="isFieldInvalid('documentNumber') && getFieldErrors('documentNumber')?.errors?.['required']" class="p-error">
-          El número de documento es obligatorio.
-        </small>
-        <small *ngIf="isFieldInvalid('documentNumber') && getFieldErrors('documentNumber')?.errors?.['pattern']" class="p-error">
-          Solo se permiten dígitos (entre 6 y 15).
-        </small>
-      </div>
-
       <!-- Nombres -->
       <div class="field">
         <label for="firstName">
@@ -118,23 +76,23 @@
         </small>
       </div>
 
-      <!-- Fecha de Nacimiento -->
+      <!-- Fecha de Contratación -->
       <div class="field">
-        <label for="birthDate">
-          Fecha de Nacimiento <span style="color: #e53935;">*</span>
+        <label for="hireDate">
+          Fecha de Contratación <span style="color: #e53935;">*</span>
         </label>
         <p-calendar
-          inputId="birthDate"
-          formControlName="birthDate"
+          inputId="hireDate"
+          formControlName="hireDate"
           dateFormat="dd/mm/yy"
           [showIcon]="true"
           [maxDate]="today"
           [showButtonBar]="true"
           placeholder="dd/mm/aaaa"
-          [styleClass]="isFieldInvalid('birthDate') ? 'ng-invalid ng-dirty w-full' : 'w-full'"
+          [styleClass]="isFieldInvalid('hireDate') ? 'ng-invalid ng-dirty w-full' : 'w-full'"
         ></p-calendar>
-        <small *ngIf="isFieldInvalid('birthDate')" class="p-error">
-          La fecha de nacimiento es obligatoria.
+        <small *ngIf="isFieldInvalid('hireDate')" class="p-error">
+          La fecha de contratación es obligatoria.
         </small>
       </div>
 
