@@ -69,8 +69,8 @@ export class PatientDetailComponent implements OnInit {
   }
 
   editPatient(): void {
-    if (this.patient?.patientId) {
-      this.router.navigate(['/patients', this.patient.patientId, 'edit']);
+    if (this.patient?.employeeId) {
+      this.router.navigate(['/patients', this.patient.employeeId, 'edit']);
     }
   }
 
